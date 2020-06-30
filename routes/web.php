@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/info','Api\TestController@info');
+Route::get('/test/receive','Api\TestController@receive');
+Route::any('/test/receive-post','Api\TestController@receivePost');
