@@ -40,4 +40,31 @@ class TestController extends Controller
         echo '<pre>';print_r($_GET);echo '</pre>';
         echo '<pre>';print_r($_POST);echo '</pre>';
     }
+
+
+    /**
+     * 
+     */
+    public function decrypt1()
+    {
+        // echo '<pre>';print_r($_POST);echo '</pre>';
+        $data = $_POST['data'];
+        $sign = $_POST['sign'];
+
+        $method = 'AES-256-CBC';
+        $key = 'sjvgkavobava';
+        $iv = '1910aslkdjhfzxcv';
+
+
+        // 验签
+        $local_sign = sha1($data.$key);
+        if($sign == $local_sign){
+            echo "验签成功";echo "</br>";
+            // 解密
+            $dec_data = openssl_decrypt($data,$method,$key,OPENSSL_RAW_DATA,$iv);
+            echo "解密后的数据: " . $dec_data;
+        }else{
+            echo "验签失败";
+        }
+    }
 }
