@@ -43,7 +43,7 @@ class TestController extends Controller
 
 
     /**
-     * 
+     * 对称加密
      */
     public function decrypt1()
     {
@@ -66,5 +66,18 @@ class TestController extends Controller
         }else{
             echo "验签失败";
         }
+    }
+
+    /**
+     * 非对称加密
+     */
+    public function rsaDecrypt1()
+    {
+        $enc_data = $_POST['data'];
+        // 使用私钥解密
+        $key_content = file_get_contents(storage_path('keys/priv.key'));
+        $priv_key = openssl_get_privatekey($key_content);
+        openssl_private_decrypt($enc_data,$dec_data,$priv_key);
+        echo "解密后:" . $dec_data;
     }
 }
