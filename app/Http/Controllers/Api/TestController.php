@@ -80,4 +80,32 @@ class TestController extends Controller
         openssl_private_decrypt($enc_data,$dec_data,$priv_key);
         echo "解密后:" . $dec_data;
     }
+
+    public function getA()
+    {
+        $data = $_GET['data'];
+        $enc_data = base64_decode($data);
+
+        $key_content = file_get_contents(storage_path('keys/b_priv.key'));
+        $priv_key = openssl_get_privatekey($key_content);
+        openssl_private_decrypt($enc_data,$dec_data,$priv_key);
+        // echo "解密数据: " . $dec_data;
+
+
+        // 返回数据
+        $data2 = '宝塔镇河妖';
+
+        $key_content2 = file_get_contents(storage_path('keys/a_pub.key'));
+        $pub_key = openssl_get_publickey($key_content2);
+        openssl_public_encrypt($data2,$enc_data2,$pub_key);
+
+        $base64_data = base64_encode($enc_data2);
+        $response = [
+            'errno' => 0,
+            'msg'   => 'ok',
+            'data'  => $base64_data
+        ];
+
+        return $response;
+    }
 }

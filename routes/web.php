@@ -20,3 +20,4 @@ Route::get('/test/receive','Api\TestController@receive');
 Route::any('/test/receive-post','Api\TestController@receivePost');
 Route::any('/test/decrypt1','Api\TestController@decrypt1');
 Route::any('/rsa/decrypt1','Api\TestController@rsaDecrypt1');
+Route::any('/rsa/get-a','Api\TestController@getA');
