@@ -108,4 +108,27 @@ class TestController extends Controller
 
         return $response;
     }
+
+    public function verify1()
+    {
+        $data = $_GET['data'];  //接受到的数据
+        $sign = base64_decode($_GET['sign']);  //接受到的签名
+
+        $key = openssl_get_publickey(file_get_contents(storage_path('keys/a_pub.key')));
+        
+        $res = openssl_verify($data,$sign,$key);
+        if($res){
+            $response = [
+                'errno' => 0,
+                'msg'   => '验签成功',
+            ];
+            return $response;
+        }else{
+            $response = [
+                'errno' => 10001,
+                'msg'   => '验签失败',
+            ];
+            return $response;
+        }
+    }
 }
